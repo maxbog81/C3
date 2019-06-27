@@ -48,6 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MailSenderDBContext.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linq2SQL\Recipient.cs" />
     <Compile Include="Data\MailMessage.cs" />
     <Compile Include="Data\Recipient.cs" />
     <Compile Include="Data\Sender.cs" />

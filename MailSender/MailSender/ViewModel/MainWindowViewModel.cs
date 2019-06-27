@@ -130,14 +130,14 @@ namespace MailSender.ViewModel
             Application.Current.Shutdown();
         }
 
-        private bool CanSaveRecipientCommandExecuted(Recipient recipient) => recipient != null;
+        private bool CanSaveRecipientCommandExecuted(Recipient recipient) => recipient != null && recipient.Name.Length > 3;
 
         private void OnSaveRecipientCommandExecuted(Recipient recipient)
         {
             _RecipientsDataService.Update(recipient);
         }
 
-        private bool CanDelRecipientCommandExecuted(Recipient recipient) => recipient != null;
+        private bool CanDelRecipientCommandExecuted(Recipient recipient) => recipient != null ;
 
         private void OnDelRecipientCommandExecuted(Recipient recipient)
         {
