@@ -8,11 +8,12 @@
         xmlns:data="clr-namespace:MailSender.lib.Data;assembly=MailSender.lib"
         xmlns:db="clr-namespace:MailSender.lib.Data.Linq2SQL;assembly=MailSender.lib"
         xmlns:cmp="clr-namespace:MailSender.Components"
+        xmlns:cmd="clr-namespace:MailSender.Commands"
         xmlns:view="clr-namespace:MailSender.View" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="{Binding Title}" 
         Height="500" Width="1024"
-        DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}" Icon="Media/mail.ico">
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -21,7 +22,12 @@
                 <MenuItem Header="Сохранить"/>
                 <MenuItem Header="Закрыть"/>
                 <Separator/>
-                <MenuItem Header="Выход" Command="{Binding ApplicationExitCommand}"/>
+                <!--<MenuItem Header="Выход" Command="{Binding ApplicationExitCommand}"/>-->
+                <MenuItem Header="Выход">
+                    <MenuItem.Command>
+                        <cmd:ApplicationCloseCommand/>
+                    </MenuItem.Command>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Сервис" IsEnabled="False"/>
             <MenuItem Header="Помощь" IsEnabled="False"/>
