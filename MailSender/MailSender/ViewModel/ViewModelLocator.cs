@@ -1,10 +1,9 @@
 using CommonServiceLocator;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using MailSender.lib.Data.Linq2SQL;
 using MailSender.lib.Services;
-using MailSender.lib.Services.InMemory;
 using MailSender.lib.Services.Linq2SQL;
+using MailSender.lib.Services.InMemory;
 
 
 namespace MailSender.ViewModel
@@ -15,7 +14,6 @@ namespace MailSender.ViewModel
         /// <summary>Конструктор локатора моделей представления. Здесь мы регистрируем все кирпичики нашего конструткора</summary>
         public ViewModelLocator()
         {
-            // Регистрируем провайдера контекнера инверсии управления и внедрения зависимости
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             #region Пример от разработчиков MVVM Light
@@ -31,34 +29,25 @@ namespace MailSender.ViewModel
             ////} 
             #endregion
 
-            // Проверяем - зарегистрирован ли уже в контейнере сервис - "Контекст БД Linq2SQL"?
-            if (!SimpleIoc.Default.IsRegistered<MailSenderDBContext>())      // Если нет, то регистрируем
-                SimpleIoc.Default.Register(() => new MailSenderDBContext()); // Регистрируем контекст с помощью фабричного метода
+            if (!SimpleIoc.Default.IsRegistered<MailSenderDBContext>())
+                SimpleIoc.Default.Register(() => new MailSenderDBContext());
 
-            // Далее регистрируем наш первый сервис доступа к данным
-            //SimpleIoc.Default.Register<IRecipientsDataService, RecipientsDataServiceLinq2SQL>();
-            // Сервис данных получателей почты требует для своей работы в конструкторе MailSenderDBContext! А он зарегистрирован у нас выше
-
-            // Также регистрируем все используемые нами модели-представления. Их в приложении может быть одна, а может быть 1000. Количество не имеет значения.
-            SimpleIoc.Default.Register<MainWindowViewModel>(); // MainWindowViewModel в конструкторе требует IRecipientsDataService, а он у нас зарегистрирован в контейнере.
-
-            // Если мы забудем зарегистрировать одну из зависимостей у какого-то класса, то мы получим ошибку времени исполнения при попытке создать экземпляр этого класса!
             var services = SimpleIoc.Default;
-            //сервис для базы данных списком в памяти
+            //services.Register<IRecipientsDataService, RecipientsDataServiceLinq2SQL>();
             services.Register<IRecipientsDataService, RecipientsDataServiceInMemory>();
             services.Register<ISendersDataService, SendersDataInMemory>();
             services.Register<IServerDataService, ServersDataInMemory>();
             services.Register<IMailMessageDataService, MailMessagesDataInMemory>();
 
+            services.Register<IMailSenderService, SmtpMailSenderService>();
+
+            services.Register<MainWindowViewModel>();
         }
 
         /// <summary>Модель-представления главного окна</summary>
         public MainWindowViewModel MainWindowViewModel => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
 
         /// <summary>Данный метод будет вызван перед штатным закрытием программы. Может быть использован для очистки мусора.</summary>
-        public static void Cleanup()
-        {
-            // TODO Clear the ViewModels
-        }
+        public static void Cleanup() { }
     }
 }
