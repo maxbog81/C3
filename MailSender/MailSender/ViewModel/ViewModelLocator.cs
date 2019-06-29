@@ -43,8 +43,12 @@ namespace MailSender.ViewModel
             SimpleIoc.Default.Register<MainWindowViewModel>(); // MainWindowViewModel в конструкторе требует IRecipientsDataService, а он у нас зарегистрирован в контейнере.
 
             // Если мы забудем зарегистрировать одну из зависимостей у какого-то класса, то мы получим ошибку времени исполнения при попытке создать экземпляр этого класса!
-
-            SimpleIoc.Default.Register<IRecipientsDataService, RecipientsDataServiceInMemory>(); //сервис в виде базы данных списком в памяти
+            var services = SimpleIoc.Default;
+            //сервис для базы данных списком в памяти
+            services.Register<IRecipientsDataService, RecipientsDataServiceInMemory>();
+            services.Register<ISendersDataService, SendersDataInMemory>();
+            services.Register<IServerDataService, ServersDataInMemory>();
+            services.Register<IMailMessageDataService, MailMessagesDataInMemory>();
 
         }
 

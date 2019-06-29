@@ -1,8 +1,7 @@
-﻿namespace MailSender.lib.Data
+﻿using MailSender.lib.Data.BaseEntityes;
+
+namespace MailSender.lib.Data
 {
-    public class Sender
-    {
-        public string Name { get; set; }
-        public string Address { get; set; }
-    }
+    /// <summary>Отправитель почты</summary>
+    public class Sender : Human { }
 }

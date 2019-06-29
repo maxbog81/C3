@@ -10,7 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using MailSender.lib.Data.Linq2SQL;
+using MailSender.lib.Data;
 using MailSender.lib.Services;
 
 namespace MailSender.ViewModel
@@ -18,6 +18,11 @@ namespace MailSender.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private readonly IRecipientsDataService _RecipientsDataService;
+        private readonly ISendersDataService _SendersDataService;
+        private readonly IServerDataService _ServerDataService;
+        private readonly IMailMessageDataService _MailMessagesDataService;
+
+        private readonly IMailSenderService _MailSenderService;
 
         private string _Title = "Рассыльщик почты";
 
@@ -48,7 +53,7 @@ namespace MailSender.ViewModel
                 _RecipientsView.Source = value;
                 RaisePropertyChanged(nameof(FiltredRecipients));
                 //Смысл в следующем: если значение свойства не изменилось(кто - то попытался установить то же значение, что уже было в этом свойстве), то мы просто ничего не делаем. 
-                //    Иначе!!! - мы устанавливаем новый источник данных для _RecipientsView
+                //Иначе!!! - мы устанавливаем новый источник данных для _RecipientsView
             }
         }
 
@@ -93,9 +98,20 @@ namespace MailSender.ViewModel
 
         public ICommand ApplicationExitCommand { get; }
 
-        public MainWindowViewModel(IRecipientsDataService RecipientsDataService)
+        public MainWindowViewModel(
+            IRecipientsDataService RecipientsDataService,
+            ISendersDataService SendersDataService,
+            IServerDataService ServerDataService,
+            IMailMessageDataService MailMessagesDataService,
+            IMailSenderService MailSenderService
+            )
         {
             _RecipientsDataService = RecipientsDataService;
+            _SendersDataService = SendersDataService;
+            _ServerDataService = ServerDataService;
+            _MailMessagesDataService = MailMessagesDataService;
+
+            _MailSenderService = MailSenderService;
 
             UpdateDataCommand = new RelayCommand(OnUpdateDataCommandExecuted, CanUpdateDataCommandExecute);
             CreateRecipientCommand = new RelayCommand(OnCreateRecipientCommandExecuted, CanCreateRecipientCommandExecute);
@@ -134,7 +150,7 @@ namespace MailSender.ViewModel
 
         private void OnSaveRecipientCommandExecuted(Recipient recipient)
         {
-            _RecipientsDataService.Update(recipient);
+            _RecipientsDataService.Edit(recipient);
         }
 
         private bool CanDelRecipientCommandExecuted(Recipient recipient) => recipient != null ;
@@ -154,7 +170,7 @@ namespace MailSender.ViewModel
                 Name = "New recpient",
                 Address = "recipient@server.com"
             };
-            _RecipientsDataService.Create(new_recipient);
+            _RecipientsDataService.Add(new_recipient);
             _Recipients.Add(new_recipient);
             CurrentRecipient = new_recipient;
         }
