@@ -11,6 +11,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using MailSender.lib.Data;
+using MailSender.lib.Data.BaseEntityes;
 using MailSender.lib.Services;
 
 namespace MailSender.ViewModel
@@ -82,6 +83,12 @@ namespace MailSender.ViewModel
             }
 
         }
+
+        public ObservableCollection<Server> Servers { get; } = new ObservableCollection<Server>();
+
+        public ObservableCollection<Sender> Senders { get; } = new ObservableCollection<Sender>();
+
+        public ObservableCollection<MailMessage> MailMessages { get; } = new ObservableCollection<MailMessage>();
 
         public ICollectionView FiltredRecipients => _RecipientsView.View;
 
@@ -185,6 +192,18 @@ namespace MailSender.ViewModel
         public void UpdateData()
         {
             Recipients = new ObservableCollection<Recipient>(_RecipientsDataService.GetAll());
+
+            void UpdateData<T>(IDataService<T> Service, ObservableCollection<T> Collection)
+                where T : Entity
+            {
+                Collection.Clear();
+                foreach (var entity in Service.GetAll())
+                    Collection.Add(entity);
+            }
+
+            UpdateData(_ServerDataService, Servers);
+            UpdateData(_SendersDataService, Senders);
+            UpdateData(_MailMessagesDataService, MailMessages);
         }
     }
 

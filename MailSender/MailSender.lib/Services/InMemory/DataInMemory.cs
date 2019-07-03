@@ -16,7 +16,7 @@ namespace MailSender.lib.Services.InMemory
         public T GetById(int id)
         {
             if(id <= 0)
-                throw new ArgumentOutOfRangeException(nameof(id), id, "Значение id должно быть болше 0");
+                throw new ArgumentOutOfRangeException(nameof(id), id, "Значение id должно быть больше 0");
 
             return _Items.FirstOrDefault(item => item.Id == id);
         }

@@ -1,7 +1,8 @@
 ﻿<Window x:Class="MailSender.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:MailSender"
@@ -55,83 +56,31 @@
                             </Style>
                         </ToolBarTray.Resources>
                         <ToolBar>
-                            <Label>Сервера</Label>
-                            <ComboBox MinWidth="100" MaxWidth="200" SelectedIndex="0" 
-                                      ItemsSource="{x:Static data:TestData.Servers}"
-                                      DisplayMemberPath="Name">
-
-                            </ComboBox>
-                            <Button ToolTip="Добавить">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="Plus" Foreground="GreenYellow" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
-                            <Button ToolTip="Редактировать">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="PencilSquareOutline" Foreground="DarkBlue" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
-                            <Button ToolTip="Удалить">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="Times" Foreground="Red" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
+                            <cmp:ListController PanelName="Сервера" 
+                                                ItemSource="{Binding Servers, IsAsync=True, Delay=500}" 
+                                                SelectedIndex="0">
+                                <cmp:ListController.ItemTemplate>
+                                    <DataTemplate DataType="data:Server">
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </cmp:ListController.ItemTemplate>
+                            </cmp:ListController>
                         </ToolBar>
-                        <ToolBar Band="0" BandIndex="1">
-                            <Label>Отправители</Label>
-                            <ComboBox MinWidth="100" MaxWidth="200" SelectedIndex="0"
-                                      ItemsSource="{x:Static data:TestData.Senders}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type data:Sender}">
+                        <ToolBar>
+                            <cmp:ListController PanelName="Отправители" 
+                                                ItemSource="{Binding Senders, IsAsync=True, Delay=500}" 
+                                                SelectedIndex="0">
+                                <cmp:ListController.ItemTemplate>
+                                    <DataTemplate DataType="data:Server">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Name}"/>
                                             <TextBlock Text="{Binding Address}"
                                                        Margin="3,0,0,0" Opacity="0.6"/>
                                         </StackPanel>
                                     </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button ToolTip="Добавить">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="Plus" Foreground="GreenYellow" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
-                            <Button ToolTip="Редактировать">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="PencilSquareOutline" Foreground="DarkBlue" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
-                            <Button ToolTip="Удалить">
-                                <StackPanel Orientation="Horizontal">
-                                    <fa:ImageAwesome Height="16" Icon="Times" Foreground="Red" Margin="0,0,3,0">
-                                        <fa:ImageAwesome.Effect>
-                                            <DropShadowEffect ShadowDepth="2" BlurRadius="1"/>
-                                        </fa:ImageAwesome.Effect>
-                                    </fa:ImageAwesome>
-                                </StackPanel>
-                            </Button>
+                                </cmp:ListController.ItemTemplate>
+                            </cmp:ListController>
                         </ToolBar>
-
                         <ToolBar Band="0" BandIndex="2">
                             <Label>Список адресатов</Label>
                             <Button ToolTip="Добавить">
@@ -220,7 +169,7 @@
                                 <Button>New</Button>
                                 <Button>Del</Button>
                             </UniformGrid>
-                            <ListBox Name="MessagesList" ItemsSource="{x:Static data:TestData.Messages}">
+                            <ListBox Name="MessagesList" ItemsSource="{Binding MailMessages}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type data:MailMessage}">
                                         <TextBlock Text="{Binding Subject}" ToolTip="{Binding Body}"/>
