@@ -11,7 +11,7 @@ namespace MailSender.ConsoleTest
 {
     static class Lesson6
     {
-        public static async void Start()
+        public static async Task Start()
         {
             //Console.WriteLine("Введите размерность первой матрицы: ");
             //int[,] A = new int[Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())];
@@ -38,16 +38,20 @@ namespace MailSender.ConsoleTest
                 }
             }
 
-            //Console.WriteLine("\nМатрица A:");
+            Console.WriteLine("\nМатрица A:");
             //Print(A);
-            //Console.WriteLine("\nМатрица B:");
+            Console.WriteLine("\nМатрица B:");
             //Print(B);
             var start = DateTime.Now;
             int[,] C = await Task.Run(() => Multiplication(A, B)); 
+            //var task1 = Multiplication(A, B);
+            //int[,] C = await task1;
             //Print(C);
             Console.WriteLine("\nРасчет окончен \nВремя вычисления = {0}", DateTime.Now - start);
 
         }
+        
+        //static async Task<int[,]> Multiplication(int[,] a, int[,] b)
         static int[,] Multiplication(int[,] a, int[,] b)
         {
             if (a.GetLength(1) != b.GetLength(0)) throw new Exception("Матрицы нельзя перемножить");

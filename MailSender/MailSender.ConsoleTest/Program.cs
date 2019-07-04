@@ -17,11 +17,13 @@ namespace MailSender.ConsoleTest
         static void Main(string[] args)
         {
             //Lesson5.Start();
-            //PrintAsync("qwerty");
+            //var task1= PrintAsync("qwerty");
 
             Console.WriteLine("Расчет произведения матриц:");
 
-            Lesson6.Start();
+            var task1=Lesson6.Start();
+
+            var wait_all_task = Task.WhenAll(task1);
 
             Console.WriteLine("\nМатрица C = A * B:\n");
             
