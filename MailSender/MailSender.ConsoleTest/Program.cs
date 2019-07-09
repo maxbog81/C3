@@ -19,14 +19,14 @@ namespace MailSender.ConsoleTest
             //Lesson5.Start();
             //var task1= PrintAsync("qwerty");
 
-            Console.WriteLine("Расчет произведения матриц:");
+            //Console.WriteLine("Расчет произведения матриц:");
+            //var start = DateTime.Now;
+            var task1 = Lesson6.Start();
 
-            var task1=Lesson6.Start();
+            //Task.WhenAll(task1).Wait();
 
-            var wait_all_task = Task.WhenAll(task1);
+            //Console.WriteLine("\nРасчет окончен \nВремя вычисления = {0}", DateTime.Now - start);
 
-            Console.WriteLine("\nМатрица C = A * B:\n");
-            
             ReadLine();
         }
     }

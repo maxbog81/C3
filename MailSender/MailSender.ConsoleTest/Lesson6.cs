@@ -5,7 +5,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-   // 1. Даны 2 двумерных матрицы.Размерность 100х100 каждая. Напишите приложение, производящее параллельное умножение матриц. Матрицы заполняются случайными целыми числами от 0 до10
+// 1. Даны 2 двумерных матрицы.Размерность 100х100 каждая. Напишите приложение, производящее параллельное умножение матриц. Матрицы заполняются случайными целыми числами от 0 до10
+
+
+//Приветствуется использование(порождение) новых задач, нацеленных на низкоскоростные переферийные устройства ввода/вывода.
+
+//private async Task<string> ReadFile(string FileName)
+//{
+//    var result = new StringBuilder();
+//    using (var file = File.OpenText(FileName))
+//        while (!file.EndOfStream)
+//            result.Append(await file
+//               .ReadLineAsync()
+//               .ConfigureAwait(false));
+//    return result.ToString();
+//}
 
 namespace MailSender.ConsoleTest
 {
@@ -43,12 +57,11 @@ namespace MailSender.ConsoleTest
             Console.WriteLine("\nМатрица B:");
             //Print(B);
             var start = DateTime.Now;
-            int[,] C = await Task.Run(() => Multiplication(A, B)); 
+            int[,] C = await Task.Run(() => Multiplication(A, B));
             //var task1 = Multiplication(A, B);
             //int[,] C = await task1;
             //Print(C);
             Console.WriteLine("\nРасчет окончен \nВремя вычисления = {0}", DateTime.Now - start);
-
         }
         
         //static async Task<int[,]> Multiplication(int[,] a, int[,] b)
@@ -59,10 +72,13 @@ namespace MailSender.ConsoleTest
 
             Parallel.For(0, a.GetLength(0), i =>
             {
-                Parallel.For(0, b.GetLength(1), j =>
+                for (int j = 0; j < b.GetLength(1); j++)
+                {
+                    for (int k = 0; k < b.GetLength(0); k++)
                     {
-                        Parallel.For(0, b.GetLength(0), k => { r[i, j] += a[i, k] * b[k, j]; });
-                    });
+                        r[i, j] += a[i, k] * b[k, j];
+                    }
+                }
             });
 
             //for (int i = 0; i < a.GetLength(0); i++)
