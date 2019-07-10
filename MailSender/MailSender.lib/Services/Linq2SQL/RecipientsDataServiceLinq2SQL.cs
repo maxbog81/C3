@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MailSender.lib.Data;
 
 namespace MailSender.lib.Services.Linq2SQL
@@ -27,6 +29,8 @@ namespace MailSender.lib.Services.Linq2SQL
            })
            .ToArray();
 
+        public async Task<IEnumerable<Recipient>> GetAllAsync() => await Task.Run(GetAll);
+
         public Recipient GetById(int id) => _db.Recipient
            .Select(r => new Recipient
            {
@@ -37,11 +41,14 @@ namespace MailSender.lib.Services.Linq2SQL
            })
            .FirstOrDefault(r => r.Id == id);
 
+        public async Task<Recipient> GetByIdAsync(int id) => await Task.Run(() => GetById(id));
+
         /// <summary>Создать (зарегистрировать) нового получателя почты в контексте БД</summary>
         /// <param name="item">Создаваемый новый получатель</param>
-        public void Add(Recipient item)
+        public int Add(Recipient item)
         {
-            if (item.Id != 0) return;
+            if (item is null) throw new ArgumentNullException(nameof(item));
+            if (item.Id != 0) return item.Id;
             _db.Recipient.InsertOnSubmit(new Data.Linq2SQL.Recipient
             {
                 Name = item.Name,
@@ -49,20 +56,47 @@ namespace MailSender.lib.Services.Linq2SQL
                 Description = item.Description
             });
             _db.SubmitChanges();
+            return item.Id;
         }
+
+        public async Task<int> AddAsync(Recipient item) => await Task.Run(() => Add(item));
 
         /// <summary>Обновить данные получателя</summary>
         /// <param name="item">Получатель почты, данные которого требуется обновить</param>
-        public void Edit(Recipient item) => _db.SubmitChanges();
+        public Recipient Edit(int id, Recipient item)
+        {
+            if (item is null) throw new ArgumentNullException(nameof(item));
+            var db_item = _db.Recipient.FirstOrDefault(r => r.Id == id);
+            if (db_item is null) return null;
+
+            db_item.Name = item.Name;
+            db_item.Address = item.Address;
+            db_item.Description = item.Description;
+
+            _db.SubmitChanges();
+
+            return new Recipient
+            {
+                Id = db_item.Id,
+                Name = db_item.Name,
+                Address = db_item.Address,
+                Description = db_item.Description
+            };
+        }
+
+        public async Task<Recipient> EditAsync(int id, Recipient item) => await Task.Run(() => Edit(id, item));
 
         /// <summary>Удалить получателя из БД</summary>
-        /// <param name="item">Получатель почты, которого требуется удалить</param>
-        public void Delete(Recipient item)
+        /// <param name="id">Идентификатор получателя почты</param>
+        public bool Delete(int id)
         {
-            var db_item = _db.Recipient.FirstOrDefault(i => i.Id == item.Id);
-            if (db_item is null) return;
+            var db_item = _db.Recipient.FirstOrDefault(i => i.Id == id);
+            if (db_item is null) return false;
             _db.Recipient.DeleteOnSubmit(db_item);
             _db.SubmitChanges();
+            return true;
         }
+
+        public async Task<bool> DeleteAsync(int id) => await Task.Run(() => Delete(id));
     }
 }

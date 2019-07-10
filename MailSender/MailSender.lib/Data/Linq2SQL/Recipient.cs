@@ -11,7 +11,7 @@ namespace MailSender.lib.Data.Linq2SQL
     {
         partial void OnNameChanging(string value)
         {
-            if (value is null)
+            if(value is null)
                 throw new ArgumentNullException(nameof(value), "Передана пустая ссылка на строку имени");
 
             //if(value.Length < 3)
@@ -37,6 +37,5 @@ namespace MailSender.lib.Data.Linq2SQL
                 return "";
             }
         }
-
     }
 }

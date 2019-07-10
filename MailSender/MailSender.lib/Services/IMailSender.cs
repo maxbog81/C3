@@ -14,7 +14,7 @@ namespace MailSender.lib.Services
         void SendParallel(MailMessage Message, Sender From, IEnumerable<Recipient> To);
 
         Task SendAsync(MailMessage Message, Sender From, Recipient To);
-        Task SendAsync(MailMessage Message, Sender From, IEnumerable<Recipient> To,
+        Task SendAsync(MailMessage Message, Sender From, IEnumerable<Recipient> To, 
             IProgress<double> Progress = null, CancellationToken Cancel = default);
     }
 }

@@ -89,8 +89,8 @@ namespace MailSender.lib.Services
         }
 
         public async Task SendAsync(
-            MailMessage Message,
-            Sender From, IEnumerable<Recipient> To,
+            MailMessage Message, 
+            Sender From, IEnumerable<Recipient> To, 
             IProgress<double> Progress = null,
             CancellationToken Cancel = default)
         {
@@ -108,7 +108,7 @@ namespace MailSender.lib.Services
                 Progress?.Report((double)i / to.Length);
             }
 
-            Progress?.Report(1);
+            Progress?.Report(1); 
             #endregion
         }
     }

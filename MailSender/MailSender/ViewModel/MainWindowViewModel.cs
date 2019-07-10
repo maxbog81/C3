@@ -157,14 +157,14 @@ namespace MailSender.ViewModel
 
         private void OnSaveRecipientCommandExecuted(Recipient recipient)
         {
-            _RecipientsDataService.Edit(recipient);
+            _RecipientsDataService.Edit(recipient.Id, recipient);
         }
 
         private bool CanDelRecipientCommandExecuted(Recipient recipient) => recipient != null ;
 
         private void OnDelRecipientCommandExecuted(Recipient recipient)
         {
-            _RecipientsDataService.Delete(recipient);
+            _RecipientsDataService.Delete(recipient.Id);
             UpdateData();
         }
 
