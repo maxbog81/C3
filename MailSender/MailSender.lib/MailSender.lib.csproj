@@ -55,13 +55,13 @@
     <Compile Include="Data\BaseEntityes\Human.cs" />
     <Compile Include="Data\BaseEntityes\NamedEntity.cs" />
     <Compile Include="Data\EF\MailSenderDb.cs" />
-    <Compile Include="Data\EF\Migrations\201907091638006_Initial.cs" />
-    <Compile Include="Data\EF\Migrations\201907091638006_Initial.Designer.cs">
-      <DependentUpon>201907091638006_Initial.cs</DependentUpon>
+    <Compile Include="Data\EF\Migrations\201907141757225_Initial.cs" />
+    <Compile Include="Data\EF\Migrations\201907141757225_Initial.Designer.cs">
+      <DependentUpon>201907141757225_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\EF\Migrations\201907091648551_SchedulerTasksAdded.cs" />
-    <Compile Include="Data\EF\Migrations\201907091648551_SchedulerTasksAdded.Designer.cs">
-      <DependentUpon>201907091648551_SchedulerTasksAdded.cs</DependentUpon>
+    <Compile Include="Data\EF\Migrations\201907141853497_ShedulerTasksAdded.cs" />
+    <Compile Include="Data\EF\Migrations\201907141853497_ShedulerTasksAdded.Designer.cs">
+      <DependentUpon>201907141853497_ShedulerTasksAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\EF\Migrations\Configuration.cs" />
     <Compile Include="Data\Linq2SQL\MailSenderDBContext.designer.cs">
@@ -134,11 +134,11 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\EF\Migrations\201907091638006_Initial.resx">
-      <DependentUpon>201907091638006_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Data\EF\Migrations\201907141757225_Initial.resx">
+      <DependentUpon>201907141757225_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Data\EF\Migrations\201907091648551_SchedulerTasksAdded.resx">
-      <DependentUpon>201907091648551_SchedulerTasksAdded.cs</DependentUpon>
+    <EmbeddedResource Include="Data\EF\Migrations\201907141853497_ShedulerTasksAdded.resx">
+      <DependentUpon>201907141853497_ShedulerTasksAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

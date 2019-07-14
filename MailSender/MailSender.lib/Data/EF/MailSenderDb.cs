@@ -9,7 +9,7 @@ namespace MailSender.lib.Data.EF
 {
     public class MailSenderDB : DbContext
     {
-        static MailSenderDB() => Database.SetInitializer(new MigrateDatabaseToLatestVersion<MailSenderDB, Migrations.Configuration>());
+        static MailSenderDB() => System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<MailSenderDB, Migrations.Configuration>());
 
         public MailSenderDB() : this("Name=MailSenderDB") { }
 

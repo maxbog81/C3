@@ -7,13 +7,13 @@ namespace MailSender.lib.Data.EF.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class ShedulerTasksAdded : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ShedulerTasksAdded));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907091638006_Initial"; }
+            get { return "201907141853497_ShedulerTasksAdded"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,15 +1,16 @@
 using System.Data.Entity.Migrations;
 
-namespace MailSender.lib.Data.EF.Migrations //-MigrationsDirectory Data\EF\Migrations
+namespace MailSender.lib.Data.EF.Migrations
 {
     //Enable-Migrations -StartUpProjectName MailSender -EnableAutomaticMigrations -MigrationsDirectory Data\EF\Migrations
     //Add-Migration Initial -StartUpProjectName MailSender -Verbose
     //Update-Database -StartUpProjectName MailSender -Verbose
-    internal sealed class Configuration : DbMigrationsConfiguration<MailSenderDB>
+
+    internal sealed class Configuration : DbMigrationsConfiguration<MailSender.lib.Data.EF.MailSenderDB>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;           // -EnableAutomaticMigrations
+            AutomaticMigrationsEnabled = true;
             MigrationsDirectory = @"Data\EF\Migrations";
         }
 
